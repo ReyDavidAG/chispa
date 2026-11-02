@@ -37,8 +37,16 @@ const toPerson = (r: PersonRow): Person => ({
 
 async function buildSession(person: Person): Promise<Session> {
 	const [areas, departments, committee] = await Promise.all([
-		supabase.from('areas').select('id').eq('manager_id', person.id),
-		supabase.from('departments').select('id').eq('manager_id', person.id),
+		supabase
+			.from('areas')
+			.select('id')
+			.eq('manager_id', person.id)
+			.returns<{ id: string }[]>(),
+		supabase
+			.from('departments')
+			.select('id')
+			.eq('manager_id', person.id)
+			.returns<{ id: string }[]>(),
 		supabase
 			.from('fair_committee')
 			.select('fair_id, fairs!inner(is_current)')
@@ -47,8 +55,8 @@ async function buildSession(person: Person): Promise<Session> {
 	])
 	const error = areas.error ?? departments.error ?? committee.error
 	if (error) throw new Error(toMessage(error))
-	const managedAreaIds = (areas.data ?? []).map(a => a.id as string)
-	const managedDepartmentIds = (departments.data ?? []).map(d => d.id as string)
+	const managedAreaIds = (areas.data ?? []).map(a => a.id)
+	const managedDepartmentIds = (departments.data ?? []).map(d => d.id)
 	const isCommittee = (committee.data ?? []).length > 0
 	const role: Role = isCommittee
 		? 'committee'

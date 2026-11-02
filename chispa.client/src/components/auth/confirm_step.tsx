@@ -1,4 +1,4 @@
-import { type CSSProperties, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { ROLE_NAMES } from '@/constants/status'
 import type { Session } from '@/types/session_type'
@@ -17,9 +17,7 @@ export function ConfirmStep({ session, onConfirm, onBack }: Props) {
 	useEffect(() => confirmRef.current?.focus(), [])
 
 	return (
-		<div
-			className='signin-form animate-panel-in'
-			style={{ '--dir': 1 } as CSSProperties}>
+		<div className='signin-form animate-panel-in' style={{ '--dir': 1 }}>
 			<h2 className='h3'>¿Eres tú?</h2>
 			<div className='profile-card'>
 				<span

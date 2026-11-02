@@ -1,4 +1,3 @@
-import type { CSSProperties } from 'react'
 import { Link } from 'react-router'
 
 import { CountUp } from '@/components/ui/count_up'
@@ -8,6 +7,7 @@ import { currentStageIndex } from '@/hooks/fair/use_fair'
 import type { Fair } from '@/types/fair_type'
 import { cn } from '@/utils/cn'
 import { daysUntil, shortDate } from '@/utils/dates'
+import { stagger } from '@/utils/stagger'
 
 export function StageCard({ fair }: { fair: Fair }) {
 	const current = currentStageIndex(fair)
@@ -43,7 +43,7 @@ export function StageCard({ fair }: { fair: Fair }) {
 							i === current && 'is-current'
 						)}
 						aria-current={i === current ? 'step' : undefined}
-						style={{ '--i': i } as CSSProperties}>
+						style={stagger(i)}>
 						<span className='stage__mark' aria-hidden='true'>
 							{i < current && <Icon name='check' />}
 							{i === current && <Icon name='spark' />}

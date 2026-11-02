@@ -1,4 +1,4 @@
-import { type CSSProperties, type FormEvent, useState } from 'react'
+import { type FormEvent, useState } from 'react'
 import { toast } from 'sonner'
 
 import { Icon } from '@/components/ui/icon'
@@ -10,6 +10,7 @@ import {
 import type { ChallengeDetail } from '@/types/challenge_type'
 import type { IdeaDetail, Requirement } from '@/types/idea_type'
 import { shortDate } from '@/utils/dates'
+import { stagger } from '@/utils/stagger'
 
 type Fields = Omit<Requirement, 'id' | 'updatedAt' | 'status'>
 
@@ -144,10 +145,7 @@ function SheetForm({
 					</div>
 				))}
 				{LABELS.map(([k, label], i) => (
-					<div
-						key={k}
-						className='animate-row-in'
-						style={{ '--i': Math.min(i, 12) } as CSSProperties}>
+					<div key={k} className='animate-row-in' style={stagger(i)}>
 						<dt>
 							<label htmlFor={`req-${k}`}>{label}</label>
 						</dt>

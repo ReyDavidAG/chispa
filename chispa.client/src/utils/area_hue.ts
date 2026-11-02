@@ -8,5 +8,6 @@ export function areaHue(key: string) {
 	return HUES[Math.abs(hash) % HUES.length]
 }
 
-export const areaStyle = (key: string) =>
-	({ '--area-h': areaHue(key) }) as CSSProperties
+export const areaStyle = (key: string): CSSProperties => ({
+	'--area-h': areaHue(key),
+})

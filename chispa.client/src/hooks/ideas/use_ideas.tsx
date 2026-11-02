@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { QUERY_KEYS } from '@/constants/query_keys'
@@ -50,6 +51,15 @@ export function useAuthors(ids: string[]) {
 		enabled: ids.length > 0,
 		staleTime: 5 * 60_000,
 	})
+}
+
+export function useAuthorMap(ideas: ReadonlyArray<Pick<IdeaCard, 'authorId'>>) {
+	const ids = useMemo(
+		() => [...new Set(ideas.flatMap(i => (i.authorId ? [i.authorId] : [])))],
+		[ideas]
+	)
+	const { data } = useAuthors(ids)
+	return useMemo(() => new Map((data ?? []).map(a => [a.id, a])), [data])
 }
 
 const patchIdea = (on: boolean) => (idea: IdeaCard) => ({

@@ -38,6 +38,15 @@
   - Sesión: inicio anónimo de Supabase + `claim_employee_number`. El rol se deduce de encargado y comité.
   - Pantallas conectadas: Entrar (dos pasos), marco (barra superior con indicador y contador de nuevos, barra inferior), Inicio (etapa, banners de nuevos y tendencia, retos que necesitan ideas), Retos (filtros en la URL, búsqueda con espera de 300 ms, banner y marcas) y Detalle de reto.
   - prettier, eslint y build en verde. `npm audit` sólo reporta las herramientas de desarrollo (cadena de eslint), igual que en el proyecto de referencia.
+- Primera `/frontend-review` de `chispa.client/src` (v0.2.0):
+  - Cero `as` para callar al compilador: las variables CSS (`--i`, `--area-h`) quedaron tipadas, las filas de Supabase usan `.returns<>()` y el estado de la chispa se estrecha con un guard.
+  - Sin `tailwind-merge`: `cn()` es sólo `clsx`, porque las clases son propias y no compiten.
+  - `useAuthorMap` reemplaza el mismo bloque copiado en cinco pantallas.
+  - Ningún `return` pasa de 100 líneas: se extrajeron los campos de organización, los tipos de solución, la vista previa del reto, los indicadores y los sugeridos de mi área, la tarjeta de acción del reto, el FAQ y la lista del combobox.
+  - El formulario de reto usa `useWatch`: sólo se vuelve a pintar lo que depende de cada campo.
+  - Probado en el navegador: formulario de reto (área → departamento, errores, cuerpo del envío), mi área, cómo funciona, detalle e indicador de pestañas. Sin errores en consola.
+- `chispa.client/vercel.json`: rewrite de SPA para React Router y caché larga de `/assets`.
+- Icono (`public/icon.svg` y PNG 180/192/512), `site.webmanifest` y metadata Open Graph/Twitter con `public/og.png`. `VITE_SITE_URL` arma las URL absolutas; `noindex` porque es una propuesta interna.
 
 ## Decisiones tomadas
 
@@ -49,6 +58,5 @@
 
 ## Siguiente
 
-1. `/frontend-review` sobre `chispa.client`.
-2. Desplegar en Vercel (variables `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`).
-3. Decidir iconos (set propio o FontAwesome Free) y arrancar `chispa.client` según `plan.md`.
+1. Desplegar en Vercel (raíz `chispa.client`; variables `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`) y agregar el dominio de Vercel en Supabase → Authentication → URL Configuration.
+2. Decidir iconos (set propio o FontAwesome Free) y arrancar `chispa.client` según `plan.md`.
