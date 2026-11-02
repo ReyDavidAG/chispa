@@ -17,7 +17,7 @@ export const newChallengeSchema = z.object({
 	frequency: text(2, 200, 'Este dato hace falta.'),
 	tried: text(2, 1000, 'Si no se ha intentado nada, dilo.'),
 	success: text(15, 1000, 'Di qué tendría que pasar para decir “listo”.'),
-	constraints: z.string().max(1000),
+	constraints: z.string().trim().max(1000),
 	types: z.array(z.string()).min(1, 'Elige al menos un tipo.'),
 	closesOn: z.string().min(10, 'Elige una fecha.'),
 })
