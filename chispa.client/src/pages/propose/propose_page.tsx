@@ -1,10 +1,4 @@
-import {
-	type CSSProperties,
-	type FormEvent,
-	useEffect,
-	useMemo,
-	useState,
-} from 'react'
+import { type FormEvent, useEffect, useMemo, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { Link, useSearchParams } from 'react-router'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -166,7 +160,7 @@ function ProposeWizard({ personId, authorName, open, presetId }: WizardProps) {
 							<div
 								key={step}
 								className='animate-panel-in'
-								style={{ '--dir': dir } as CSSProperties}>
+								style={{ '--dir': dir }}>
 								{views[step]}
 							</div>
 							<div className='wizard-actions'>

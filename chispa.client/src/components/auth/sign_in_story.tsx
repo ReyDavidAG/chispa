@@ -1,7 +1,6 @@
-import type { CSSProperties } from 'react'
-
 import { Wordmark } from '@/components/ui/wordmark'
 import { areaStyle } from '@/utils/area_hue'
+import { stagger } from '@/utils/stagger'
 
 const SAMPLE = [
 	{
@@ -41,7 +40,7 @@ export function SignInStory() {
 						key={t.folio}
 						className='signin-tag'
 						data-area=''
-						style={{ ...areaStyle(t.area), '--i': i } as CSSProperties}>
+						style={{ ...areaStyle(t.area), ...stagger(i) }}>
 						<span className='tag-hole' />
 						<span className='folio'>{t.folio}</span>
 						<p>{t.title}</p>

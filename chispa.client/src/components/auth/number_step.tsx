@@ -1,4 +1,3 @@
-import type { CSSProperties } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -29,7 +28,7 @@ export function NumberStep({ defaultValue, serverError, onSubmit }: Props) {
 	return (
 		<form
 			className='signin-form animate-panel-in'
-			style={{ '--dir': -1 } as CSSProperties}
+			style={{ '--dir': -1 }}
 			noValidate
 			onSubmit={handleSubmit(v => onSubmit(v.employeeNumber))}>
 			<h2 className='h3'>Entra con tu número</h2>
