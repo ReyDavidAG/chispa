@@ -46,6 +46,7 @@
   - El formulario de reto usa `useWatch`: sólo se vuelve a pintar lo que depende de cada campo.
   - Probado en el navegador: formulario de reto (área → departamento, errores, cuerpo del envío), mi área, cómo funciona, detalle e indicador de pestañas. Sin errores en consola.
 - `chispa.client/vercel.json`: rewrite de SPA para React Router y caché larga de `/assets`.
+- Icono (`public/icon.svg` y PNG 180/192/512), `site.webmanifest` y metadata Open Graph/Twitter con `public/og.png`. `VITE_SITE_URL` arma las URL absolutas; `noindex` porque es una propuesta interna.
 
 ## Decisiones tomadas
 
