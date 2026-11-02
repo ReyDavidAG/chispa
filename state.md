@@ -47,6 +47,7 @@
   - Probado en el navegador: formulario de reto (área → departamento, errores, cuerpo del envío), mi área, cómo funciona, detalle e indicador de pestañas. Sin errores en consola.
 - `chispa.client/vercel.json`: rewrite de SPA para React Router y caché larga de `/assets`.
 - Icono (`public/icon.svg` y PNG 180/192/512), `site.webmanifest` y metadata Open Graph/Twitter con `public/og.png`. `VITE_SITE_URL` arma las URL absolutas; `noindex` porque es una propuesta interna.
+- Publicado en Vercel: https://chispa-phi.vercel.app (proyecto `chispa`, raíz `chispa.client`, se despliega con cada push a `main`). Variables: `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`; la URL de la metadata sale sola del dominio de producción.
 
 ## Decisiones tomadas
 
@@ -58,5 +59,4 @@
 
 ## Siguiente
 
-1. Desplegar en Vercel (raíz `chispa.client`; variables `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`) y agregar el dominio de Vercel en Supabase → Authentication → URL Configuration.
-2. Decidir iconos (set propio o FontAwesome Free) y arrancar `chispa.client` según `plan.md`.
+1. Decidir iconos (set propio o FontAwesome Free) y arrancar `chispa.client` según `plan.md`.
