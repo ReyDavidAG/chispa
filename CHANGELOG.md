@@ -1,5 +1,9 @@
 # Cambios
 
+## 0.1.1 · 2026-11-02
+
+- Se ignora la caché local de Vite (`.vite/`).
+
 ## 0.1.0 · 2026-11-02
 
 Primera versión de la propuesta.
