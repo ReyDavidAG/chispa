@@ -1,4 +1,4 @@
-import { type CSSProperties, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router'
 
 import { Icon } from '@/components/ui/icon'
@@ -32,9 +32,7 @@ export function ProposeSuccess({
 				La ve el encargado de {challenge.departmentName ?? challenge.areaName}.
 				Aquí verás cuando cambie de estado.
 			</p>
-			<ol
-				className='next-steps animate-tile-in'
-				style={{ '--i': 4 } as CSSProperties}>
+			<ol className='next-steps animate-tile-in' style={{ '--i': 4 }}>
 				<li>
 					<strong>Recibida.</strong> Ya cualquiera puede leerla, avivarla y
 					comentarla.

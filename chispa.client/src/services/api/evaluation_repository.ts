@@ -36,12 +36,21 @@ export const evaluationRepository: EvaluationRepository = {
 			.select('id, code, name, hint, weight, position, fairs!inner(is_current)')
 			.eq('fairs.is_current', true)
 			.order('position')
+			.returns<
+				{
+					id: string
+					code: string
+					name: string
+					hint: string | null
+					weight: number
+				}[]
+			>()
 		fail(error)
 		return (data ?? []).map(c => ({
-			id: c.id as string,
-			code: c.code as string,
-			name: c.name as string,
-			hint: c.hint as string | null,
+			id: c.id,
+			code: c.code,
+			name: c.name,
+			hint: c.hint,
 			weight: Number(c.weight),
 		}))
 	},
@@ -93,9 +102,12 @@ export const evaluationRepository: EvaluationRepository = {
 		const { data, error } = await supabase
 			.from('idea_scores')
 			.select('idea_id, evaluator_count, weighted_score')
+			.returns<
+				{ idea_id: string; evaluator_count: number; weighted_score: number }[]
+			>()
 		fail(error)
 		return (data ?? []).map(s => ({
-			ideaId: s.idea_id as string,
+			ideaId: s.idea_id,
 			evaluatorCount: Number(s.evaluator_count),
 			weightedScore: Number(s.weighted_score),
 		}))

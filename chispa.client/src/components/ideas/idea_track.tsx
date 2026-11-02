@@ -1,9 +1,8 @@
-import type { CSSProperties } from 'react'
-
 import { Icon } from '@/components/ui/icon'
 import { IDEA_STATUS, IDEA_STEPS } from '@/constants/status'
 import type { IdeaStatus } from '@/types/idea_type'
 import { cn } from '@/utils/cn'
+import { stagger } from '@/utils/stagger'
 
 export function IdeaTrack({ status }: { status: IdeaStatus }) {
 	const current = IDEA_STATUS[status].step
@@ -24,7 +23,7 @@ export function IdeaTrack({ status }: { status: IdeaStatus }) {
 						i === current && 'is-current'
 					)}
 					aria-current={i === current ? 'step' : undefined}
-					style={{ '--i': i } as CSSProperties}>
+					style={stagger(i)}>
 					<span className='track__dot' aria-hidden='true'>
 						{i < current && <Icon name='check' />}
 					</span>

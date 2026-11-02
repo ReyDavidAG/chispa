@@ -1,4 +1,3 @@
-import type { CSSProperties } from 'react'
 import { Link } from 'react-router'
 
 import { Icon } from '@/components/ui/icon'
@@ -7,6 +6,7 @@ import { currentStageIndex, useFair } from '@/hooks/fair/use_fair'
 import { useCriteria } from '@/hooks/ideas/use_evaluation'
 import { cn } from '@/utils/cn'
 import { shortDate } from '@/utils/dates'
+import { stagger } from '@/utils/stagger'
 
 const FAQS = [
 	[
@@ -48,6 +48,51 @@ const GOOD_IDEA = [
 	'Puede ser sencilla: no tiene que costar.',
 ]
 
+function CheckCard({
+	title,
+	items,
+	spark = false,
+}: {
+	title: string
+	items: string[]
+	spark?: boolean
+}) {
+	return (
+		<div className={cn('how-card', spark && 'how-card--spark')}>
+			<h2 className='h3'>{title}</h2>
+			<ul className='check-list' role='list'>
+				{items.map(t => (
+					<li key={t}>
+						<Icon name='check' />
+						{t}
+					</li>
+				))}
+			</ul>
+		</div>
+	)
+}
+
+function Faq() {
+	return (
+		<section className='section'>
+			<h2 className='h2'>Preguntas frecuentes</h2>
+			<div className='faq'>
+				{FAQS.map(([q, a]) => (
+					<details key={q}>
+						<summary>
+							{q}
+							<Icon name='chevronDown' />
+						</summary>
+						<div className='faq__body'>
+							<p>{a}</p>
+						</div>
+					</details>
+				))}
+			</div>
+		</section>
+	)
+}
+
 export default function HowItWorksPage() {
 	const fair = useFair()
 	const criteria = useCriteria()
@@ -72,7 +117,7 @@ export default function HowItWorksPage() {
 						<li
 							key={s.code}
 							className={cn('animate-tile-in', i === current && 'is-current')}
-							style={{ '--i': i } as CSSProperties}>
+							style={stagger(i)}>
 							<span className='stage-detail__n num' aria-hidden='true'>
 								{i + 1}
 							</span>
@@ -94,28 +139,8 @@ export default function HowItWorksPage() {
 			</section>
 
 			<section className='section how-pair'>
-				<div className='how-card'>
-					<h2 className='h3'>Un buen reto</h2>
-					<ul className='check-list' role='list'>
-						{GOOD_CHALLENGE.map(t => (
-							<li key={t}>
-								<Icon name='check' />
-								{t}
-							</li>
-						))}
-					</ul>
-				</div>
-				<div className='how-card how-card--spark'>
-					<h2 className='h3'>Una buena chispa</h2>
-					<ul className='check-list' role='list'>
-						{GOOD_IDEA.map(t => (
-							<li key={t}>
-								<Icon name='check' />
-								{t}
-							</li>
-						))}
-					</ul>
-				</div>
+				<CheckCard title='Un buen reto' items={GOOD_CHALLENGE} />
+				<CheckCard title='Una buena chispa' items={GOOD_IDEA} spark />
 			</section>
 
 			<section className='section'>
@@ -139,22 +164,7 @@ export default function HowItWorksPage() {
 				</dl>
 			</section>
 
-			<section className='section'>
-				<h2 className='h2'>Preguntas frecuentes</h2>
-				<div className='faq'>
-					{FAQS.map(([q, a]) => (
-						<details key={q}>
-							<summary>
-								{q}
-								<Icon name='chevronDown' />
-							</summary>
-							<div className='faq__body'>
-								<p>{a}</p>
-							</div>
-						</details>
-					))}
-				</div>
-			</section>
+			<Faq />
 
 			<section className='how-cta'>
 				<h2 className='h2'>¿Ya tienes una idea?</h2>

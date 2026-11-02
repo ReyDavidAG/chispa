@@ -143,9 +143,12 @@ export const challengeRepository: ChallengeRepository = {
 		const { data, error } = await supabase
 			.from('challenge_activity_7d')
 			.select('challenge_id, supports_7d, ideas_7d')
+			.returns<
+				{ challenge_id: string; supports_7d: number; ideas_7d: number }[]
+			>()
 		if (error) throw new Error(toMessage(error))
 		return (data ?? []).map(r => ({
-			challengeId: r.challenge_id as string,
+			challengeId: r.challenge_id,
 			supports7d: Number(r.supports_7d),
 			ideas7d: Number(r.ideas_7d),
 		}))

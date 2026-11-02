@@ -1,11 +1,11 @@
 import { Link, useParams } from 'react-router'
 
+import { ChallengeCtaCard } from '@/components/challenges/challenge_cta_card'
 import { ChallengeIdeas } from '@/components/challenges/challenge_ideas'
 import { HotFlag, NewFlag } from '@/components/ui/flag'
 import { Icon } from '@/components/ui/icon'
 import { OrgLine } from '@/components/ui/org_line'
 import { StatusPill } from '@/components/ui/status_pill'
-import { SolutionTag } from '@/components/ui/tags'
 import { ROUTES } from '@/constants/routes'
 import {
 	trendReason,
@@ -36,8 +36,6 @@ export default function ChallengeDetailPage() {
 
 	if (isLoading) return <LoadingPage />
 	if (!c) return <NotFoundPage />
-
-	const canPropose = c.status === 'open'
 
 	return (
 		<div className='wrap'>
@@ -81,52 +79,7 @@ export default function ChallengeDetailPage() {
 					</div>
 				</header>
 
-				<aside className='reto__aside'>
-					<div className='cta-card'>
-						<dl className='stat-row stat-row--tight'>
-							<div>
-								<dt>Chispas</dt>
-								<dd className='num'>{c.ideaCount}</dd>
-							</div>
-							<div>
-								<dt>Avivadas</dt>
-								<dd className='num'>{c.supportCount}</dd>
-							</div>
-						</dl>
-						{canPropose ? (
-							<>
-								<Link
-									className='btn btn--spark btn--block btn--lg'
-									to={`${ROUTES.propose}?challenge=${c.folio}`}>
-									<Icon name='plus' />
-									Proponer mi chispa
-								</Link>
-								<p className='cta-card__hint'>
-									Toma unos 3 minutos. Puedes mandarla anónima.
-								</p>
-							</>
-						) : (
-							<p className='cta-card__closed'>
-								<Icon name='info' />
-								Este reto ya no recibe chispas. Puedes leer y avivar las que
-								hay.
-							</p>
-						)}
-						<div className='cta-card__types'>
-							<p className='kicker'>Soluciones que se esperan</p>
-							<ul className='type-list' role='list'>
-								{c.solutionTypes.map(t => (
-									<li key={t}>
-										<SolutionTag code={t} />
-									</li>
-								))}
-							</ul>
-							<p className='cta-card__hint'>
-								No es obligatorio: cualquier buena idea cuenta.
-							</p>
-						</div>
-					</div>
-				</aside>
+				<ChallengeCtaCard challenge={c} />
 
 				<div className='reto__body'>
 					{BLOCKS.filter(([k]) => c[k]).map(([k, label]) => (

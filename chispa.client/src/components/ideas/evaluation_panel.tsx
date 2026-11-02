@@ -17,6 +17,8 @@ import type {
 	IdeaStatus,
 } from '@/types/idea_type'
 
+const isIdeaStatus = (v: string): v is IdeaStatus => v in IDEA_STATUS
+
 const STATUS_OPTIONS = Object.entries(IDEA_STATUS).map(([value, s]) => ({
 	value,
 	label: s.label,
@@ -124,7 +126,7 @@ function EvaluationForm({
 						id='idea-status'
 						options={STATUS_OPTIONS}
 						value={status}
-						onChange={v => setStatusDraft(v as IdeaStatus)}
+						onChange={v => isIdeaStatus(v) && setStatusDraft(v)}
 						searchPlaceholder='Buscar estado'
 					/>
 				</div>

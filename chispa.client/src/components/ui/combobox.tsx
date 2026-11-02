@@ -1,6 +1,7 @@
 import {
 	type KeyboardEvent,
 	type ReactNode,
+	type RefObject,
 	useEffect,
 	useId,
 	useMemo,
@@ -34,7 +35,6 @@ interface Props {
 	label?: string
 	describedBy?: string
 	variant?: 'field' | 'pill'
-	className?: string
 }
 
 const norm = (s: string) =>
@@ -42,6 +42,65 @@ const norm = (s: string) =>
 		.normalize('NFD')
 		.replace(/\p{Diacritic}/gu, '')
 		.toLowerCase()
+
+interface ListProps {
+	listRef: RefObject<HTMLUListElement | null>
+	listId: string
+	options: ReadonlyArray<ComboboxOption>
+	active: number
+	value: string
+	onHover: (idx: number) => void
+	onPick: (opt: ComboboxOption) => void
+}
+
+function ComboboxList({
+	listRef,
+	listId,
+	options,
+	active,
+	value,
+	onHover,
+	onPick,
+}: ListProps) {
+	return (
+		<ul ref={listRef} id={listId} role='listbox' className='combo-pop__list'>
+			{options.length === 0 ? (
+				<li className='combo-pop__empty' role='presentation'>
+					Sin coincidencias
+				</li>
+			) : (
+				options.map((opt, idx) => {
+					const isSel = opt.value === value
+					return (
+						<li
+							key={opt.value || '__clear__'}
+							id={`${listId}-${idx}`}
+							data-idx={idx}
+							role='option'
+							aria-selected={isSel}
+							className={cn(
+								'combo-opt',
+								idx === active && 'is-active',
+								isSel && 'is-selected'
+							)}
+							onMouseEnter={() => onHover(idx)}
+							onMouseDown={e => e.preventDefault()}
+							onClick={() => onPick(opt)}>
+							{opt.leading}
+							<span className='combo-opt__text'>
+								<span className='combo-opt__label'>{opt.label}</span>
+								{opt.description && (
+									<span className='combo-opt__desc'>{opt.description}</span>
+								)}
+							</span>
+							{isSel && <Icon name='check' className='combo-opt__check' />}
+						</li>
+					)
+				})
+			)}
+		</ul>
+	)
+}
 
 export function Combobox({
 	options,
@@ -56,7 +115,6 @@ export function Combobox({
 	label,
 	describedBy,
 	variant = 'field',
-	className,
 }: Props) {
 	const listId = useId()
 	const [open, setOpen] = useState(false)
@@ -141,11 +199,7 @@ export function Combobox({
 					}
 					aria-invalid={invalid || undefined}
 					aria-describedby={describedBy}
-					className={cn(
-						'combo',
-						variant === 'pill' && 'combo--pill',
-						className
-					)}>
+					className={cn('combo', variant === 'pill' && 'combo--pill')}>
 					<span className='combo__value'>
 						{selected?.leading}
 						<span className={cn('combo__label', !selected && 'is-placeholder')}>
@@ -190,50 +244,15 @@ export function Combobox({
 							onKeyDown={onKeyDown}
 						/>
 					</div>
-					<ul
-						ref={listRef}
-						id={listId}
-						role='listbox'
-						className='combo-pop__list'>
-						{filtered.length === 0 ? (
-							<li className='combo-pop__empty' role='presentation'>
-								Sin coincidencias
-							</li>
-						) : (
-							filtered.map((opt, idx) => {
-								const isSel = opt.value === value
-								return (
-									<li
-										key={opt.value || '__clear__'}
-										id={`${listId}-${idx}`}
-										data-idx={idx}
-										role='option'
-										aria-selected={isSel}
-										className={cn(
-											'combo-opt',
-											idx === active && 'is-active',
-											isSel && 'is-selected'
-										)}
-										onMouseEnter={() => setActive(idx)}
-										onMouseDown={e => e.preventDefault()}
-										onClick={() => commit(opt)}>
-										{opt.leading}
-										<span className='combo-opt__text'>
-											<span className='combo-opt__label'>{opt.label}</span>
-											{opt.description && (
-												<span className='combo-opt__desc'>
-													{opt.description}
-												</span>
-											)}
-										</span>
-										{isSel && (
-											<Icon name='check' className='combo-opt__check' />
-										)}
-									</li>
-								)
-							})
-						)}
-					</ul>
+					<ComboboxList
+						listRef={listRef}
+						listId={listId}
+						options={filtered}
+						active={active}
+						value={value}
+						onHover={setActive}
+						onPick={commit}
+					/>
 				</Popover.Content>
 			</Popover.Portal>
 		</Popover.Root>

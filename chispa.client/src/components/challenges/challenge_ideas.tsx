@@ -2,7 +2,7 @@ import { useMemo, useRef, useState } from 'react'
 
 import { IdeaRow } from '@/components/ideas/idea_row'
 import { EmptyState } from '@/components/ui/empty_state'
-import { useAuthors, useChallengeIdeas } from '@/hooks/ideas/use_ideas'
+import { useAuthorMap, useChallengeIdeas } from '@/hooks/ideas/use_ideas'
 import { useIndicator } from '@/hooks/ui/use_indicator'
 import { plural } from '@/utils/plural'
 
@@ -21,17 +21,7 @@ export function ChallengeIdeas({ challengeId }: { challengeId: string }) {
 		`idea-sort-${challengeId}`,
 		sort
 	)
-	const ids = useMemo(
-		() => [
-			...new Set(data.map(i => i.authorId).filter((x): x is string => !!x)),
-		],
-		[data]
-	)
-	const authors = useAuthors(ids)
-	const byId = useMemo(
-		() => new Map((authors.data ?? []).map(a => [a.id, a])),
-		[authors.data]
-	)
+	const byId = useAuthorMap(data)
 	const sorted = useMemo(
 		() =>
 			[...data].sort((a, b) =>
