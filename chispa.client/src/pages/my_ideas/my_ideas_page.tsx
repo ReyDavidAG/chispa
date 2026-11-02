@@ -1,10 +1,4 @@
-import {
-	type CSSProperties,
-	type KeyboardEvent,
-	useMemo,
-	useRef,
-	useState,
-} from 'react'
+import { type KeyboardEvent, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router'
 
 import { IdeaRow } from '@/components/ideas/idea_row'
@@ -14,7 +8,7 @@ import { ROUTES } from '@/constants/routes'
 import { IDEA_STATUS, IDEA_STEPS } from '@/constants/status'
 import { useChallenges } from '@/hooks/challenges/use_challenges'
 import {
-	useAuthors,
+	useAuthorMap,
 	useMyIdeas,
 	useSupportedIdeas,
 } from '@/hooks/ideas/use_ideas'
@@ -42,17 +36,7 @@ export default function MyIdeasPage() {
 		() => (tab === 'mine' ? mine.data : supported.data) ?? [],
 		[tab, mine.data, supported.data]
 	)
-	const authorIds = useMemo(
-		() => [
-			...new Set(list.map(i => i.authorId).filter((x): x is string => !!x)),
-		],
-		[list]
-	)
-	const authors = useAuthors(authorIds)
-	const authorById = useMemo(
-		() => new Map((authors.data ?? []).map(a => [a.id, a])),
-		[authors.data]
-	)
+	const authorById = useAuthorMap(list)
 	const challengeById = useMemo(
 		() => new Map((challenges.data ?? []).map(c => [c.id, c])),
 		[challenges.data]
@@ -149,7 +133,7 @@ export default function MyIdeasPage() {
 				role='tabpanel'
 				aria-labelledby={`tab-${tab}`}
 				className='tab-panel animate-panel-in'
-				style={{ '--dir': dir } as CSSProperties}>
+				style={{ '--dir': dir }}>
 				{list.length ? (
 					<div className='idea-list'>{list.map(row)}</div>
 				) : tab === 'mine' ? (
