@@ -144,4 +144,16 @@ El esquema evita a propósito lo que sólo existe en Postgres, para que la migra
 - **Más empresas, áreas o departamentos:** son filas, y `rh_key` permite sincronizarlas con RH.
 - **Auditoría:** historial de estados y borrado lógico de comentarios.
 
+## Otras apps sobre esta base
+
+El Trueque (esquema `trueque`) y Custodia (esquema `custodia`) viven en este mismo Postgres y reutilizan `people`, `companies`, `areas`, `departments` y `current_person_id()`. Ninguna escribe en `public`. El Trueque agrega tres triggers sobre tablas de Chispa:
+
+| Trigger | Tabla | Qué hace |
+|---|---|---|
+| `trueque_award_idea` | `ideas` (insert) | Abona cacaos al autor por mandar una chispa (con tope mensual). |
+| `trueque_award_idea_status` | `ideas` (update de `status`) | Abona por revisión, feria e implementación, una sola vez por chispa y regla. |
+| `trueque_award_challenge_insert` / `_publish` | `challenges` | Abona por reto publicado o sugerido y aceptado. |
+
+Su explicación completa está en el repo `trueque`, en `docs/database.md`.
+
 Queda para después, sin cambiar lo que ya existe: adjuntos (Supabase Storage + `challenge_attachments` / `idea_attachments`), menciones y respuestas en hilo.

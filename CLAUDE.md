@@ -40,6 +40,18 @@ Estados de la chispa: `received` (Recibida) · `review` (En revisión) · `selec
 | Responsable de área | Lo anterior + publicar y editar los retos de su área, aceptar retos sugeridos, evaluar chispas de su área. |
 | Comité | Lo anterior en todas las áreas + mover etapas, seleccionar para la feria y generar la ficha de requerimiento. |
 
+### Ecosistema
+
+Chispa es la primera de tres apps que comparten **la misma base de datos** (un esquema de Postgres por app) y las mismas personas, empresas y áreas, que viven en `public`:
+
+| App | Repo | Esquema | Relación con Chispa |
+|---|---|---|---|
+| Chispa | este | `public` | Dueña de lo común (`companies`, `areas`, `departments`, `people`, `current_person_id()`). |
+| El Trueque | `trueque` | `trueque` | La tienda de **cacaos**. Sus triggers escuchan `public.ideas` y `public.challenges` y abonan cacaos por chispa recibida, revisión, feria, implementación y reto publicado. |
+| Custodia | `custodia` | `custodia` | Inventario y préstamo de equipo; postula equipo dado de baja a El Trueque. |
+
+**Cambiar el estado o el folio de `ideas` o `challenges` afecta a El Trueque.** Antes de renombrar columnas o estados de esas tablas, revisa sus triggers (`trueque.on_idea_insert`, `trueque.on_idea_status`, `trueque.on_challenge_published`) y corre su prueba.
+
 ## Fases
 
 | Fase | Qué | Dónde corre |
