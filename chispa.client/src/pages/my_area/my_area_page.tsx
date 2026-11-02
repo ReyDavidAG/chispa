@@ -1,17 +1,16 @@
-import { type CSSProperties, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link, Navigate } from 'react-router'
-import { toast } from 'sonner'
 
+import { AreaKpis, type Kpi } from '@/components/area/area_kpis'
 import { ChallengeQueueRow, IdeaQueueRow } from '@/components/area/queue_rows'
+import { SuggestedChallenges } from '@/components/area/suggested_challenges'
 import { Combobox } from '@/components/ui/combobox'
-import { CountUp } from '@/components/ui/count_up'
 import { Icon } from '@/components/ui/icon'
 import { ROUTES } from '@/constants/routes'
 import { useRequiredSession } from '@/hooks/auth/use_session'
-import { useSetChallengeStatus } from '@/hooks/challenges/use_challenge_admin'
 import { useChallenges } from '@/hooks/challenges/use_challenges'
 import { useScores } from '@/hooks/ideas/use_evaluation'
-import { useAllIdeas, useAuthors } from '@/hooks/ideas/use_ideas'
+import { useAllIdeas, useAuthorMap } from '@/hooks/ideas/use_ideas'
 import { canManage } from '@/utils/permissions'
 import { plural } from '@/utils/plural'
 
@@ -20,7 +19,6 @@ export default function MyAreaPage() {
 	const challenges = useChallenges()
 	const ideas = useAllIdeas()
 	const scores = useScores()
-	const setStatus = useSetChallengeStatus()
 	const [areaFilter, setAreaFilter] = useState('')
 
 	const scoped = useMemo(
@@ -44,7 +42,10 @@ export default function MyAreaPage() {
 		[scores.data]
 	)
 	const pending = useMemo(
-		() => ideasIn.filter(i => i.status === 'received' || i.status === 'review'),
+		() =>
+			ideasIn
+				.filter(i => i.status === 'received' || i.status === 'review')
+				.sort((a, b) => b.supportCount - a.supportCount),
 		[ideasIn]
 	)
 	const unscored = pending.filter(i => !scoreById.has(i.id))
@@ -53,17 +54,7 @@ export default function MyAreaPage() {
 	const published = scoped.filter(
 		c => c.status !== 'suggested' && c.status !== 'archived'
 	)
-	const authorIds = useMemo(
-		() => [
-			...new Set(pending.map(i => i.authorId).filter((x): x is string => !!x)),
-		],
-		[pending]
-	)
-	const authors = useAuthors(authorIds)
-	const authorById = useMemo(
-		() => new Map((authors.data ?? []).map(a => [a.id, a])),
-		[authors.data]
-	)
+	const authorById = useAuthorMap(pending)
 	const areaOptions = useMemo(() => {
 		const m = new Map<string, { label: string; description: string }>()
 		for (const c of challenges.data ?? [])
@@ -75,30 +66,16 @@ export default function MyAreaPage() {
 
 	if (session.role === 'member') return <Navigate to={ROUTES.home} replace />
 
-	const decide = (id: string, status: 'open' | 'archived') =>
-		setStatus.mutate(
-			{ id, status },
-			{
-				onSuccess: () =>
-					toast.success(
-						status === 'open' ? 'Reto publicado' : 'Sugerencia archivada'
-					),
-				onError: e =>
-					toast.error(e instanceof Error ? e.message : 'No se pudo actualizar'),
-			}
-		)
-
 	const committee = session.role === 'committee'
-	const kpis = [
-		[
-			'Retos abiertos',
-			published.filter(c => c.status === 'open').length,
-			false,
-		],
-		['Chispas recibidas', ideasIn.length, false],
-		['Sin calificar', unscored.length, true],
-		['Seleccionadas', selected.length, false],
-	] as const
+	const kpis: Kpi[] = [
+		{
+			label: 'Retos abiertos',
+			value: published.filter(c => c.status === 'open').length,
+		},
+		{ label: 'Chispas recibidas', value: ideasIn.length },
+		{ label: 'Sin calificar', value: unscored.length, attention: true },
+		{ label: 'Seleccionadas', value: selected.length },
+	]
 
 	return (
 		<div className='wrap'>
@@ -135,60 +112,8 @@ export default function MyAreaPage() {
 				</div>
 			)}
 
-			<dl className='kpis'>
-				{kpis.map(([label, value, attention], i) => (
-					<div
-						key={label}
-						className={
-							attention
-								? 'kpi is-attention animate-tile-in'
-								: 'kpi animate-tile-in'
-						}
-						style={{ '--i': i } as CSSProperties}>
-						<dt>{label}</dt>
-						<dd className='num'>
-							<CountUp to={value} delay={120 + i * 60} />
-						</dd>
-					</div>
-				))}
-			</dl>
-
-			{suggested.length > 0 && (
-				<section className='section'>
-					<div className='section__head'>
-						<h2 className='h3'>
-							Retos sugeridos por colaboradores · {suggested.length}
-						</h2>
-					</div>
-					<ul className='queue' role='list'>
-						{suggested.map((c, i) => (
-							<ChallengeQueueRow
-								key={c.id}
-								c={c}
-								index={i}
-								actions={
-									<span className='queue-row__actions'>
-										<button
-											type='button'
-											className='btn btn--sm btn--spark'
-											disabled={setStatus.isPending}
-											onClick={() => decide(c.id, 'open')}>
-											Publicar
-										</button>
-										<button
-											type='button'
-											className='btn btn--sm btn--ghost'
-											disabled={setStatus.isPending}
-											onClick={() => decide(c.id, 'archived')}>
-											Archivar
-										</button>
-									</span>
-								}
-							/>
-						))}
-					</ul>
-				</section>
-			)}
+			<AreaKpis items={kpis} />
+			<SuggestedChallenges challenges={suggested} />
 
 			<div className='panel-split'>
 				<section className='section'>
