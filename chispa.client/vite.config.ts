@@ -3,6 +3,10 @@ import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
+const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+if (!process.env.VITE_SITE_URL && vercelUrl)
+	process.env.VITE_SITE_URL = `https://${vercelUrl}`
+
 export default defineConfig({
 	plugins: [react(), tailwindcss()],
 	resolve: { alias: { '@': path.resolve(__dirname, './src') } },

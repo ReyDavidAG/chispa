@@ -1,5 +1,9 @@
 # Cambios
 
+## 0.2.1 · 2026-11-02
+
+- La metadata toma el dominio de producción de Vercel cuando no hay `VITE_SITE_URL`.
+
 ## 0.2.0 · 2026-11-02
 
 - Revisión de front: tipos sin casts, `cn()` sin `tailwind-merge`, hook `useAuthorMap` y pantallas grandes divididas en componentes con un solo trabajo.
