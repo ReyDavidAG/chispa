@@ -56,7 +56,10 @@
 - El anonimato es de presentación: `author_id` siempre se guarda y la vista `idea_cards` lo oculta.
 - Las librerías de fase 1 son las de el cliente de referencia con las mismas versiones (lista en `plan.md`).
 - El logo es la chispa junto a la palabra. Las etapas de ejemplo no se traslapan.
+- Ecosistema: Chispa, El Trueque y Custodia comparten la base, un esquema por app; lo común vive en `public`.
 
 ## Siguiente
+
+0. El Trueque y Custodia ya tienen su esquema sobre esta base (repos `trueque` y `custodia`). Integración en `chispa.client` propuesta en `plan.md`.
 
 1. Decidir iconos (set propio o FontAwesome Free) y arrancar `chispa.client` según `plan.md`.

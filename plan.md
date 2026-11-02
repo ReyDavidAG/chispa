@@ -92,6 +92,16 @@ chispa.client/src/
 9. Despliegue en Vercel con `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`.
 10. `/frontend-review` antes de cada commit.
 
+## Integración con El Trueque y Custodia (a aprobar)
+
+La base ya abona cacaos desde Chispa (triggers del esquema `trueque`). En `chispa.client` falta enseñarlo, con la misma estructura y `/frontend-review`:
+
+1. `feature/cacaos-earned`: cuando cambia el estado de tu chispa, el aviso dice cuántos cacaos ganaste ("Tu chispa llegó a la feria · +60 cacaos"), leyendo `trueque.ledger` por `source_id`.
+2. Un enlace "Mis cacaos" en el menú de usuario hacia El Trueque, con el saldo de `trueque.balances`.
+3. En "Cómo funciona", una sección corta con lo que paga cada etapa (de `trueque.earning_rules`).
+
+Requiere exponer el esquema `trueque` en Supabase (pasos en el `plan.md` de El Trueque).
+
 ## Fase 2 · Producto (deseable)
 
 API .NET con la estructura de el proyecto de referencia (Api / Application CQRS / Domain / Infrastructure), SQL Server con el mismo modelo (ver `docs/database.md`, sección "Paso a SQL Server"), Auth0 en lugar del número de trabajador, notificaciones y exportar la ficha a la herramienta de desarrollo.
