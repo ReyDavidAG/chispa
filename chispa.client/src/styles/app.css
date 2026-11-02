@@ -283,7 +283,6 @@ a:hover {
 	margin-bottom: var(--space-2xs);
 }
 
-/* Buttons */
 .btn {
 	--btn-bg: var(--color-ink);
 	--btn-fg: var(--color-on-ink);
@@ -363,7 +362,6 @@ a:hover {
 	justify-content: center;
 }
 
-/* Wordmark */
 .wordmark {
 	display: inline-flex;
 	font-size: 1.6rem;
@@ -385,7 +383,6 @@ a:hover {
 	transform: rotate(12deg);
 }
 
-/* Topbar */
 .topbar {
 	position: sticky;
 	top: 0;
@@ -577,7 +574,6 @@ a:hover {
 	display: none;
 }
 
-/* Tabbar (mobile) */
 .tabbar {
 	position: fixed;
 	z-index: 20;
@@ -645,7 +641,6 @@ a:hover {
 	stroke-width: 2.4;
 }
 
-/* Avatar */
 .avatar {
 	--area-h: 60;
 	display: inline-grid;
@@ -692,7 +687,6 @@ a:hover {
 	white-space: nowrap;
 }
 
-/* Chips & pills */
 .area-chip {
 	display: inline-flex;
 	align-items: center;
@@ -805,7 +799,6 @@ a.area-chip:hover {
 	color: var(--color-ink-2);
 }
 
-/* Reto tag card: the signature piece */
 .tag-grid {
 	display: grid;
 	gap: var(--space-md);
@@ -905,7 +898,6 @@ a.area-chip:hover {
 	font-size: var(--text-base);
 }
 
-/* Support (avivar) */
 .support-btn {
 	position: relative;
 	z-index: 2;
@@ -979,7 +971,6 @@ a.area-chip:hover {
 	color: var(--color-ink);
 }
 
-/* Idea rows */
 .idea-list {
 	display: flex;
 	flex-direction: column;
@@ -1076,7 +1067,6 @@ a.area-chip:hover {
 	height: 22px;
 }
 
-/* Toasts */
 .toasts {
 	position: fixed;
 	z-index: 60;
@@ -1126,7 +1116,6 @@ a.area-chip:hover {
 	}
 }
 
-/* Forms */
 .field {
 	display: flex;
 	flex-direction: column;
@@ -1439,7 +1428,6 @@ fieldset + .field {
 	color: var(--color-muted);
 }
 
-/* Segmented & filter chips */
 .segmented {
 	display: inline-flex;
 	max-width: 100%;
@@ -1579,7 +1567,6 @@ fieldset + .field {
 	font-weight: 600;
 }
 
-/* Panels */
 .panel {
 	padding: var(--space-lg);
 	border-radius: var(--radius-lg);
@@ -1623,7 +1610,6 @@ fieldset + .field {
 	line-height: 1.2;
 }
 
-/* Sign in */
 .signin {
 	min-height: 100svh;
 	display: grid;
@@ -1781,7 +1767,6 @@ fieldset + .field {
 	background: var(--color-ink);
 }
 
-/* Home */
 .home-head {
 	display: grid;
 	gap: var(--space-xl);
@@ -2009,7 +1994,6 @@ fieldset + .field {
 	white-space: nowrap;
 }
 
-/* Reto detail */
 .reto {
 	display: grid;
 	gap: var(--space-lg);
@@ -2117,7 +2101,6 @@ fieldset + .field {
 	border-top: 1px solid var(--color-rule);
 }
 
-/* Wizard */
 .wizard {
 	display: grid;
 	gap: var(--space-xl);
@@ -2352,7 +2335,6 @@ fieldset + .field {
 	font-weight: 600;
 }
 
-/* Idea detail */
 .idea-layout {
 	display: grid;
 	gap: var(--space-xl);
@@ -2677,7 +2659,6 @@ input[type='range'] {
 	color: var(--color-muted);
 }
 
-/* Mis chispas */
 .draft-card {
 	display: flex;
 	align-items: center;
@@ -2794,7 +2775,6 @@ input[type='range'] {
 	color: var(--color-ink-2);
 }
 
-/* Area panel */
 .kpis {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2892,7 +2872,6 @@ input[type='range'] {
 	height: 15px;
 }
 
-/* Cómo funciona */
 .how-head {
 	padding: var(--space-2xl) 0 var(--space-md);
 	display: flex;
@@ -3047,7 +3026,6 @@ input[type='range'] {
 	text-align: center;
 }
 
-/* Reto form */
 .form-layout {
 	display: grid;
 	gap: var(--space-xl);
@@ -3060,7 +3038,6 @@ input[type='range'] {
 	display: none;
 }
 
-/* ≥ 600 */
 @media (min-width: 600px) {
 	.tag-grid {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3127,7 +3104,6 @@ input[type='range'] {
 	}
 }
 
-/* ≥ 900: desktop shell */
 @media (min-width: 900px) {
 	.topnav,
 	.topbar__propose {

@@ -222,7 +222,6 @@
 	animation: fade-out 220ms var(--ease-in) forwards;
 }
 
-/* Brand */
 .wordmark__mark {
 	animation: twinkle-in 720ms var(--ease-out) 120ms backwards;
 	transition: transform 520ms var(--ease-out);
@@ -232,7 +231,6 @@
 	transform: rotate(102deg);
 }
 
-/* Buttons and links */
 .btn .icon:last-child:not(:first-child),
 .link-quiet .icon,
 .back-link .icon {
@@ -246,7 +244,6 @@
 	transform: translateX(-3px);
 }
 
-/* Navigation */
 .topnav {
 	position: relative;
 }
@@ -336,7 +333,6 @@
 	box-shadow: 0 0 0 2px var(--color-surface);
 }
 
-/* Segmented and tabs */
 .segmented.has-indicator {
 	position: relative;
 }
@@ -368,7 +364,6 @@
 	background: var(--color-ink);
 }
 
-/* Flags: nuevo y en tendencia */
 .tag-card__head .pill {
 	margin-left: 0;
 }
@@ -431,7 +426,6 @@
 	border-color: color-mix(in oklch, var(--color-spark) 45%, var(--color-rule));
 }
 
-/* Tag card swings from its hole */
 .tag-card {
 	transform-origin: 23px 23px;
 }
@@ -447,7 +441,6 @@
 		0 0 0 3px var(--area-ink);
 }
 
-/* Novedades */
 .news-row {
 	display: grid;
 	gap: var(--space-md);
@@ -637,7 +630,6 @@
 	--btn-fg: var(--color-ink);
 }
 
-/* Home */
 .hl {
 	background: linear-gradient(var(--color-spark-soft), var(--color-spark-soft))
 		no-repeat 0 88% / 100% 34%;
@@ -700,7 +692,6 @@
 	animation: tile-in 560ms var(--ease-out) 160ms backwards;
 }
 
-/* Sign in */
 .signin__copy > * {
 	animation: page-in 600ms var(--ease-out) backwards;
 }
@@ -736,7 +727,6 @@
 	animation: page-in 600ms var(--ease-out) 260ms backwards;
 }
 
-/* Support (avivar) */
 .support-btn:active {
 	transform: scale(0.96);
 }
@@ -808,7 +798,6 @@
 	animation: roll-down 300ms var(--ease-out);
 }
 
-/* Wizard */
 .wizard-progress .is-current .wizard-progress__bar {
 	position: relative;
 	overflow: hidden;
@@ -833,7 +822,6 @@
 	animation: tile-in 480ms var(--ease-out) 120ms backwards;
 }
 
-/* Success */
 .success__mark {
 	position: relative;
 	animation: ignite 620ms var(--ease-out) 80ms backwards;
@@ -905,7 +893,6 @@
 	animation-delay: 640ms;
 }
 
-/* Idea detail */
 .track li {
 	animation: row-in 360ms var(--ease-out) backwards;
 	animation-delay: calc(var(--i, 0) * 90ms + 200ms);
@@ -939,7 +926,6 @@
 	animation-delay: 660ms;
 }
 
-/* FAQ */
 .faq details::details-content {
 	block-size: 0;
 	overflow: clip;
