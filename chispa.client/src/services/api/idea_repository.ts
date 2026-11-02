@@ -101,8 +101,9 @@ export const ideaRepository: IdeaRepository = {
 			.from('supports')
 			.select('idea_id')
 			.eq('person_id', personId)
+			.returns<{ idea_id: string }[]>()
 		fail(s.error)
-		const ids = (s.data ?? []).map(x => x.idea_id as string)
+		const ids = (s.data ?? []).map(x => x.idea_id)
 		if (!ids.length) return []
 		const { data, error } = await cards()
 			.in('id', ids)
@@ -132,18 +133,20 @@ export const ideaRepository: IdeaRepository = {
 			supabase
 				.from('idea_benefits')
 				.select('benefit_code')
-				.eq('idea_id', data.id),
+				.eq('idea_id', data.id)
+				.returns<{ benefit_code: string }[]>(),
 			supabase
 				.from('idea_needs')
 				.select('label, position')
 				.eq('idea_id', data.id)
-				.order('position'),
+				.order('position')
+				.returns<{ label: string }[]>(),
 		])
 		fail(benefits.error ?? needs.error)
 		return {
 			...toCard(data),
-			benefits: (benefits.data ?? []).map(b => b.benefit_code as string),
-			needs: (needs.data ?? []).map(n => n.label as string),
+			benefits: (benefits.data ?? []).map(b => b.benefit_code),
+			needs: (needs.data ?? []).map(n => n.label),
 		}
 	},
 
@@ -178,7 +181,8 @@ export const ideaRepository: IdeaRepository = {
 			p_needs: input.needs,
 		})
 		fail(error)
-		return { folio: data as string }
+		if (typeof data !== 'string') throw new Error('No se recibió el folio.')
+		return { folio: data }
 	},
 
 	async setSupport(ideaId, personId, on) {
