@@ -1,5 +1,13 @@
 # Cambios
 
+## 0.2.0 · 2026-11-02
+
+- Revisión de front: tipos sin casts, `cn()` sin `tailwind-merge`, hook `useAuthorMap` y pantallas grandes divididas en componentes con un solo trabajo.
+- El formulario de reto sólo vuelve a pintar lo que cambia (`useWatch`).
+- Configuración de Vercel: rewrite de SPA y caché de assets.
+- Icono de la app (favicon, Apple y manifest) y metadata para compartir con imagen de vista previa de 1200×630; la URL sale de `VITE_SITE_URL`.
+- Icono de la app (favicon, Apple y manifest) y metadata para compartir con imagen de vista previa de 1200×630; la URL sale de `VITE_SITE_URL`.
+
 ## 0.1.1 · 2026-11-02
 
 - Se ignora la caché local de Vite (`.vite/`).
